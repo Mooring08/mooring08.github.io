@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <!--
+            Load Carto's code so we can pull in our Carto maps.
+        -->
+        <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+      
+        <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
+
+        <style>  
+            .frame {
+                font-size: 95px; 
+                font-family: "arial"; 
+                border: .5em solid;
+                padding:40px 5px;
+                display:inline-block;
+                background:black;
+             }      
+            .handcuff-image div {
+                width: 100%;
+                height: 600px;
+                padding: 10px;
+                margin:10px;
+            }     
+            a {
+                color: #f9a29f;
+                font-family: monospace;
+                font-size: 20px;
+            }
+            html, body {
+                font-family:monospace;
+                font-size: 18px;
+                line-height: 20px bold;
+                color:azure;
+                background-color: black;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                width: 100%
+            }
+
+            blockquote {
+                font-family: "arial";
+                font-size: 35px bold;
+                color:#bf2520; 
+                line-height: 50px;
+              
+                padding:10px 5px;
+                border:8px solid #ccc; 
+                display:inline-block;
+                background:grey;
+            }
+  
+          .frame{
+            border: .5em solid #bf2520;
+             width: 80%;
+                
+            }
+          .border{
+            border: .8em solid #bf2520;
+            }
+            .h2 {
+                font-family: "Arial";
+                font-size: 25px;
+                color:#bf2520;
+                line-height: 40px
+            } 
+            .h3 {
+                font-family: monospace;
+                font-size: 20px;
+                color:#f9a29f;
+            }
+            docu {
+                font-family: "Arial";
+                font-size: 40px;
+                color: azure;
+                line-height: normal
+            }
+            #map {
+                width: 770px;
+                height: 600px;
+                padding-top: 20px;
+            }
+                .buttons {
+                position: inherit;
+                bottom: 20px;
+                left: 15px; }
+
+            button {
+                background: #bf2520; color: black;font-family: "Arial"; font-size: 15px;
+                padding: 10px;
+            }
+        </style>
+    </head>
+  <body>
+  <span class=frame>
+      <frame><center>THE<strong>RIGHT</strong>TO<strong>VOTE!</strong></center></frame></span>
+        
+    <p><span class="handcuff-image">
+            
+    <div><center><img src="http://i.huffpost.com/gen/1546035/images/o-BLACK-MAN-HANDCUFFS-facebook.jpg" height="500" width="1000"></center></div></span></p>
+   
+    
+    <div class="blockquote">
+      <h1><blockquote><center><em><strong>"6.1 MILLION AMERICANS</strong></em> are considered convicted felons and<em> CANNOT VOTE!"</em></center></blockquote></h1></div>
+
+       <div class=border>             
+<border><p>The nation's prison population has grown over the span of almost 5 decades now with the incarceration rate currently more than four times the world average with about 2.2 million people in prison and jails. Despite the evident decrease in the occurrences of violent crime, Federal inmates have doubled in numbers as well as those occupying private prisons and immigration detention centers across the nation. Research even shows that mass incarceration has a minimal effect on crime.Further research even shows that the "so called" putative benefits such as rehabilitation through short term or long term sentenced incarceration is costly for not only the prison population, but also everyday citizens. Time in prison equals continued economic hardship and a loss of the privilege to vote, which should be afforded to all citizens regardless of their pasts. According to New York times article, "More than $80 billion is spent annually on corrections, or over $600 per household as the Bureau of Prison budget now accounts for 25% of the entire Department of Justice budget." It grew 1,700 percent from 1980 to 2010 and is consistently grows unto this day. Recently Attorney General Jeff Sessions rescinded the Obama Administration's order from August the 16th, which advised the bureau not to renew any private prison contracts. It's back to business as usual for the bureau as many are expecting a new wave of inmates in the prison boom.</p></border>               
+<div class="docu"><docu><p><center><strong>WATCH THE DOCUMENTARY 13TH</strong></center></p></docu></div>
+
+<center><iframe width="560" height="315" src="https://www.youtube.com/embed/V66F3WU2CKk" frameborder="0" allowfullscreen></iframe></center>
+            
+        <div class="h2">   
+        <h2><center>Map of Prisoner Disenfranchised Rates Across America</center></h2></div>    
+            
+        <div class="h3">      
+        <h3><center>Voter ID Laws have gradually lifted, but more needs to be done.</center></h3></div> 
+        
+<p>The next steps of my project will entail a map of the amount of shares private corporations and the federal government have invested into these prisons. I am currently reviewing the investments of the Corrections Corporation of America (CoreCivic) and the GEO Group, Management and Training Corp., Community Education Centers, La Salle Southwest Corrections and Emerald Correctional Management; however, all of the data is on the stocks for private prisons. I will check Nasdaq.com or Yahoo Finance for additional data on Federal Prison Industries, also known as UNICOR and FPI, which is primary government sponsored and part of the Department Of Justice. Data pictured above was collected from <a href target=_blank"http://www.sentencingproject.org/the-facts/#map"><em>The Sentencing Project.</em></a>
+    
+  <center><div id="map"></div></center>
+    <div class="buttons">
+            <button class="State Felony Restrictions">State Felony Restrictions</button>
+            <button class="Voter Identification Laws">Voter Id Laws</button>
+            <button class="Reset">reset</button>
+        </div>
+
+        <script>
+            var TheRighttoVoteLayer;
+            $(document).ready(function () {
+                
+              cartodb.createVis('map',
+            'https://thenewschool.carto.com/u/moora08/api/v2/viz/61593e01-b150-4c5a-ab95-10f50cc0bff9/viz.json', {
+                cartodb_logo:false,
+                shareable:false,
+                zoom: 4,
+                center_lat:40.529458,
+                center_lon:-96.196289,
+                
+              })
+                    .done(function (vis, layers) {
+                        TheRighttoVoteLayer = layers[1].getSubLayer(1);
+                    });
+                $('.State Felony Restrictions').click(function () {
+                    TheRighttoVoteLayer.setSQL("SELECT * FROM moora08.disenfranchisement WHERE state_felony_restriction = 'Inmate, Parolees, Probationers & Ex-felons'");
+                });
+                $('.Voter Identification Laws').click(function () {
+                    TheRighttoVoteLayer.setSQL("SELECT * FROM moora08.disenfranchisement WHERE voter_identification_laws = 'Photo Id Requested'");
+                });
+                $('.Reset').click(function () {
+                    TheRighttoVoteLayer.setSQL("SELECT * FROM moora08.disenfranchisemente");
+                });
+            });
+    </script>
+    </body>
+</html>
