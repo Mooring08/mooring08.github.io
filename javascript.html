@@ -128,11 +128,11 @@
         </div>
 
         <script>
-            var TheRighttoVoteLayer;
+            var StateFelonyRestrictionsLayer;
             $(document).ready(function () {
                 
               cartodb.createVis('map',
-            'https://thenewschool.carto.com/u/moora08/api/v2/viz/61593e01-b150-4c5a-ab95-10f50cc0bff9/viz.json', {
+            'https://thenewschool.carto.com/u/moora060/api/v2/viz/6aa65dd0-f957-11e6-89ce-0ee66e2c9693/viz.json', {
                 cartodb_logo:false,
                 shareable:false,
                 zoom: 4,
@@ -141,16 +141,16 @@
                 
               })
                     .done(function (vis, layers) {
-                        TheRighttoVoteLayer = layers[1].getSubLayer(1);
+                        StateFelonyRestrictionsLayer = layers[1].getSubLayer(1);
                     });
                 $('.State Felony Restrictions').click(function () {
-                    TheRighttoVoteLayer.setSQL("SELECT * FROM moora08.disenfranchisement WHERE state_felony_restriction = 'Inmate, Parolees, Probationers & Ex-felons'");
+                    StateFelonyRestrictionsLayer.setSQL("SELECT * FROM moora060.disenfranchisement_data WHERE state_felony_restriction = 'Inmate, Parolees, Probationers & Ex-felons'");
                 });
                 $('.Voter Identification Laws').click(function () {
-                    TheRighttoVoteLayer.setSQL("SELECT * FROM moora08.disenfranchisement WHERE voter_identification_laws = 'Photo Id Requested'");
+                    StateFelonyRestrictionsLayer.setSQL("SELECT * FROM moora060.disenfranchisement_data WHERE voter_identification_laws = 'Photo Id Requested'");
                 });
                 $('.Reset').click(function () {
-                    TheRighttoVoteLayer.setSQL("SELECT * FROM moora08.disenfranchisemente");
+                    StateFelonyRestrictions.setSQL("SELECT * FROM moora060.disenfranchisement_data");
                 });
             });
     </script>
