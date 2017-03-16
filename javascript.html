@@ -123,7 +123,7 @@
   <center><div id="map"></div></center>
     <div class="buttons">
             <button class="State Felony Restrictions">State Felony Restrictions</button>
-            <button class="Voter Identification Laws">Voter Id Laws</button>
+            <button class="Voter Id Laws">Voter Id Laws</button>
             <button class="Reset">reset</button>
         </div>
 
@@ -146,7 +146,7 @@
                 $('.State Felony Restrictions').click(function () {
                     StateFelonyRestrictionsLayer.setSQL("SELECT * FROM moora060.disenfranchisement_data WHERE state_felony_restrictions = 'Inmate, Parolees, Probationers & Ex-felons'");
                 });
-                $('.Voter Identification Laws').click(function () {
+                $('.Voter Id Laws').click(function () {
                     StateFelonyRestrictionsLayer.setSQL("SELECT * FROM moora060.disenfranchisement_data WHERE voter_identification_laws = 'Photo Id Requested'");
                 });
                 $('.Reset').click(function () {
