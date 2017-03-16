@@ -141,16 +141,16 @@
                 
               })
                     .done(function (vis, layers) {
-                        StateFelonyRestrictionsLayer = layers[1].getSubLayer(1);
+                        StateFelonyRestrictionsLayer = layers[1].getSubLayer(2);
                     });
                 $('.State Felony Restrictions').click(function () {
-                    StateFelonyRestrictionsLayer.setSQL("SELECT * FROM moora060.disenfranchisement_data WHERE state_felony_restriction = 'Inmate, Parolees, Probationers & Ex-felons'");
+                    StateFelonyRestrictionsLayer.setSQL("SELECT * FROM moora060.disenfranchisement_data WHERE state_felony_restrictions = 'Inmate, Parolees, Probationers & Ex-felons'");
                 });
                 $('.Voter Identification Laws').click(function () {
                     StateFelonyRestrictionsLayer.setSQL("SELECT * FROM moora060.disenfranchisement_data WHERE voter_identification_laws = 'Photo Id Requested'");
                 });
                 $('.Reset').click(function () {
-                    StateFelonyRestrictions.setSQL("SELECT * FROM moora060.disenfranchisement_data");
+                    StateFelonyRestrictionsLayer.setSQL("SELECT * FROM moora060.disenfranchisement_data");
                 });
             });
     </script>
