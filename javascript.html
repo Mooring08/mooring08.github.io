@@ -122,8 +122,8 @@
     
   <center><div id="map"></div></center>
     <div class="buttons">
-            <button class="State Felony Restrictions">State Felony Restrictions</button>
-            <button class="Voter Id Laws">Voter Id Laws</button>
+            <button class="State_Felony_Restrictions">State_Felony_Restrictions</button>
+            <button class="Voter_Id_Laws">Voter_Id_Laws</button>
             <button class="Reset">reset</button>
         </div>
 
@@ -141,12 +141,12 @@
                 
               })
                     .done(function (vis, layers) {
-                        StateFelonyRestrictionsLayer = layers[1].getSubLayer(2);
+                        StateFelonyRestrictionsLayer = layers[1].getSubLayer(1);
                     });
-                $('.State Felony Restrictions').click(function () {
+                $('.State_Felony_Restrictions').click(function () {
                     StateFelonyRestrictionsLayer.setSQL("SELECT * FROM moora060.disenfranchisement_data WHERE state_felony_restrictions = 'Inmate, Parolees, Probationers & Ex-felons'");
                 });
-                $('.Voter Id Laws').click(function () {
+                $('.Voter_Id_Laws').click(function () {
                     StateFelonyRestrictionsLayer.setSQL("SELECT * FROM moora060.disenfranchisement_data WHERE voter_identification_laws = 'Photo Id Requested'");
                 });
                 $('.Reset').click(function () {
