@@ -141,7 +141,7 @@
                 
               })
                     .done(function (vis, layers) {
-                        StateFelonyRestrictionsLayer = layers[1].getSubLayer(1);
+                        StateFelonyRestrictionsLayer = layers[1].getSubLayer(2);
                     });
                 $('.State_Felony_Restrictions').click(function () {
                     StateFelonyRestrictionsLayer.setSQL("SELECT * FROM moora060.disenfranchisement_data WHERE state_felony_restrictions = 'Inmate, Parolees, Probationers & Ex-felons'");
