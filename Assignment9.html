@@ -137,10 +137,14 @@
 Let's look at the voter identification laws per state in regards to convicted and ex-convicted prisoners. Data pictured below was collected from <a href target=_blank"http://www.sentencingproject.org/the-facts/#map"><em>The Sentencing Project.</em></a>
     
   <center><div id="map"></div></center>
-
+<div class="buttons">
+            <button class="State_Felony_Restrictions">State_Felony_Restrictions</button>
+            <button class="Voter_Identification_Laws">Voter_Id_Laws</button>
+            <button class="Reset">reset</button>
+        </div>
         <script>
         
-            var VoterIDLawsLayer;
+             var StateFelonyRestrictionsLayer;
             $(document).ready(function () {
                 
              cartodb.createVis('map',
