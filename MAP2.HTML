@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <!--
+            Load Carto's code so we can pull in our Carto maps.
+        -->
+        <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+      
+        <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
+
+        <style>  
+            .frame {
+                font-size: 95px; 
+                font-family: "arial"; 
+                border: .5em solid;
+                padding:40px 5px;
+                display:inline-block;
+                background:grey;
+             }      
+            .handcuff-image div {
+                width: 100%;
+                height: 600px;
+                padding: 10px;
+                margin:10px;
+            }     
+            a {
+                color: #f9a29f;
+                font-family: monospace;
+                font-size: 20px;
+            }
+            html, body {
+                font-family:monospace;
+                font-size: 18px;
+                line-height: 20px bold;
+                color:white;
+                background-color: black;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                width: 100%
+            }
+            .title {
+                font-family:monospace;
+                font-size: 20px;
+                line-height: 20px bold;
+                color:white;
+                }
+            blockquote {
+                font-family: "arial";
+                font-size: 35px bold;
+                color:#24b9e2; 
+                line-height: 50px;
+              
+                padding:10px 5px;
+                border:8px solid #ccc; 
+                display:inline-block;
+                background:grey;
+            }
+  
+          .frame{
+            border: .5em solid #24b9e2;
+             width: 80%;
+                
+            }
+          .border{
+            border: .8em solid #24b9e2;
+            }
+            .h2 {
+                font-family: "Arial";
+                font-size: 25px;
+                color:#24b9e2;
+                line-height: 40px
+            } 
+            .h3 {
+                font-family: monospace;
+                font-size: 20px;
+                color:blue;
+            }
+            docu {
+                font-family: "Arial";
+                font-size: 40px;
+                color: azure;
+                line-height: normal
+            }
+            #map {
+                width: 770px;
+                height: 600px;
+                padding-top: 20px;
+            }
+            .type-picker {
+                position: absolute;
+                top: 2250px;
+                left: 300px; 
+            }
+            button, input, optgroup, select, textarea {
+                color: inherit;
+                font: inherit;
+            }      
+            button, select {
+                text-transform: none;
+                background: #b4b8ba; color: white;font-family: monospace; font-size: 20px;
+                padding: 10px; 
+            }
+            option {
+                font-size: 20px;
+                color: azure;
+                display: block;
+                white-space: pre;
+                min-height: 1.2em;
+                padding: 0px 2px 1px;
+                font-family: monospace;
+            }
+            input, textarea, select, button {
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0em 0em 0em 0em;
+    font: 11px system-ui;
+}
+user agent stylesheet
+input, textarea, select, button, meter, progress {
+    -webkit-writing-mode: horizontal-tb;
+}
+Inherited from body
+public_editor3.css:83
+
+        </style>
+    </head>
+  <body>
+  <span class=frame>
+      <frame><center>THE<strong>RIGHT</strong>TO<strong>VOTE!</strong></center></frame></span>
+
+   
+    
+    <div class="blockquote">
+      <h1><blockquote><center><em><strong>"6.1 MILLION AMERICANS</strong></em> are considered convicted felons and<em> CANNOT VOTE!"</em></center></blockquote></h1></div>
+
+            
+
+Let's look at the voter identification laws per state in regards to convicted and ex-convicted prisoners. Data pictured below was collected from <a href="http://www.sentencingproject.org/the-facts/#map" target="_blank"><em>The Sentencing Project.</em></a>
+
+
+           
+  <center><div id="map"></div></center>
+
+<select class="type-picker">
+            <option value="all">All types</option>
+            <option value="No Requirements to Vote">No Requirements To Vote</option>
+            <option value="ID Requested Photo not Required">ID Requested Photo not Required</option>
+            <option value="Photo Id Requested">Photo Id Requested</option>
+            <option value="N/A">N/A</option>
+            <option value="Strict Photo ID">Strict Photo ID</option>
+            <option value="Strict Non-Photo ID">Strict Non-Photo ID</option>
+            <option value="Photo Id Requested">Photo Id Requested</option>
+        </select>
+            
+        <script>
+        
+            var VoterIDLawsLayer;
+            $(document).ready(function () {
+                
+             cartodb.createVis('map',
+            'https://thenewschool.carto.com/u/moora060/api/v2/viz/c62776a9-f6d9-4ed4-a5e4-9e9847de367f/viz.json', {
+                cartodb_logo:false,
+                shareable:false,
+                zoom: 4,
+                center_lat:40.529458,
+                center_lon:-96.196289,  
+              })
+                .done(function (vis, layers) {
+                        // Store the data layer for later:
+                        //  * layers[0] is the base layer (eg OpenStreetMap)
+                        //  * layers[1] is where all of your data layers go, and they're stored as "sublayers". The first one is numbered 0, the second is 1, etc. In this case we're getting the first sublayer.
+                    VoterIDLawsLayer = layers[1].getSubLayer(0);
+            });
+                    
+                    $('.type-picker').change(function () {
+                    var type = $(this).val();
+                    var setsql;
+                    if (type === 'all') {
+                        //if type is 'all', reset SQL to the original
+                        sql = "SELECT * FROM census";
+                    }
+                    else if (type === 'No Requirements to Vote'){
+                        // else, select only features with the census field set to the chosen type
+                        // You need to test this SQL on  your dataset to make sure it will work
+                        sql = "SELECT * FROM census WHERE voter_id_laws = 'No Requirements to Vote'";
+                    }
+                      else if (type === 'ID Requested Photo not Required') {
+                        // else, select only features with the census field set to the chosen type
+                        // You need to test this SQL on  your dataset to make sure it will work
+                        sql = "SELECT * FROM census WHERE voter_id_laws = 'ID Requested Photo not Required'";
+                    }
+                      else if (type === 'Photo Id Requested') {
+                        // else, select only features with the census field set to the chosen type
+                        // You need to test this SQL on  your dataset to make sure it will work
+                        sql = "SELECT * FROM census WHERE voter_id_laws = 'Photo Id Requested'";
+                     }
+                       else if (type === 'N/A') {
+                        // else, select only features with the census field set to the chosen type
+                        // You need to test this SQL on  your dataset to make sure it will work
+                        sql = "SELECT * FROM census WHERE voter_id_laws = 'N/A'";
+                     }
+                       else if (type === 'Strict Photo ID') {
+                        // else, select only features with the census field set to the chosen type
+                        // You need to test this SQL on  your dataset to make sure it will work
+                        sql = "SELECT * FROM census WHERE voter_id_laws = 'Strict Photo ID'";
+                    }
+                     else if (type === 'Strict Non-Photo ID') {
+                        // else, select only features with the census field set to the chosen type
+                        // You need to test this SQL on  your dataset to make sure it will work
+                        sql = "SELECT * FROM census WHERE voter_id_laws = 'Strict Non-Photo ID'";
+                     }
+                     else if (type === 'Photo Id Requested') {
+                        // else, select only features with the census field set to the chosen type
+                        // You need to test this SQL on  your dataset to make sure it will work
+                        sql = "SELECT * FROM census WHERE voter_id_laws = 'Photo Id Requested'";
+                     }
+                        VoterIDLawsLayer.setSQL(sql);
+                });
+            });
+    
+    </script>
+    </body>
+</html>
